@@ -4,23 +4,23 @@ const typeDefs = gql`
 
     type Inventory {
         id: String!
-        uomId: String!
-        parentId: String
-        containerId: String
+        uom_id: String!
+        parent_id: String
+        container_id: String
         attributes: [InventoryAttribute]
-        children: [Inventory]
     }
 
     type InventoryAttribute {
-        inventoryId: String!
-        itemId: String!
+        id: Int!
+        inventory_id: String!
+        item_id: String!
         qty: Int!
-        lotId: String
+        lot_id: String
         status: String
     }
 
     type Query {
-        listInventory(id: String!): Inventory
+        listInventory(id: String!): [Inventory]
     }
 
     type Mutation {
