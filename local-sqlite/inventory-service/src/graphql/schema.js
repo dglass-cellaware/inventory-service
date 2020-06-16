@@ -1,36 +1,33 @@
 const { gql } = require('apollo-server')
 
 const typeDefs = gql`
-    type User {
-        id: Int!
-        name: String!
-        email: String!
-        recipes: [Recipe!]!
-      }
 
-    type Recipe {
-        id: Int!
-        title: String!
-        ingredients: String!
-        direction: String!
-        user: User!
+    type Inventory {
+        id: String!
+        uomId: String!
+        parentId: String
+        containerId: String
+        attributes: [InventoryAttribute]
+        children: [Inventory]
+    }
+
+    type InventoryAttribute {
+        inventoryId: String!
+        itemId: String!
+        qty: Int!
+        lotId: String
+        status: String
     }
 
     type Query {
-        user(id: Int!): User
-        allRecipes: [Recipe!]!
-        recipe(id: Int!): Recipe
+        listInventory(id: String!): Inventory
     }
 
     type Mutation {
-        createUser(name: String!, email: String!, password: String!): User!
-        createRecipe(
-          userId: Int!
-          title: String!
-          ingredients: String!
-          direction: String!
-        ): Recipe!
+        createInventory(id: String!, uomId: String!, parentId: String, containerId: String): Int
+        deleteInventory(id: String!): Int!
+        createInventoryAttribute(inventoryId: String!, itemId: String!, qty: Int!, lotId: String, status: String): Int
     }
 `
 
-module.exports = typeDefs
+module.exports = typeDefs;

@@ -1,33 +1,17 @@
 const resolvers = {
     Query: {
-        async user(root, { id }, { models }) {
-            return models.User.findById(id)
-        },
-        async allRecipes(root, args, { models }) {
-            return models.Recipe.findAll()
-        },
-        async recipe(root, { id }, { models }) {
-            return models.Recipe.findById(id)
+        async listInventory(root, { id }) {
+
         }
     }, Mutation: {
-        async createUser(root, { name, email, password }, { models }) {
-            return models.User.create({
-                name,
-                email,
-                password: await bcrypt.hash(password, 10)
-            })
+        async createInventory(root, { id, uomId, parentId, containerId }) {
+
         },
-        async createRecipe(root, { userId, title, ingredients, direction }, { models }) {
-            return models.Recipe.create({ userId, title, ingredients, direction })
-        }
-    }, User: {
-        async recipes(user) {
-            return user.getRecipes()
-        }
-    },
-    Recipe: {
-        async user(recipe) {
-            return recipe.getUser()
+        async deleteInventory(root, { id }) {
+
+        },
+        async createInventoryAttribute(root, { inventoryId, itemId, qty, lotId, status }) {
+
         }
     }
 }
