@@ -1,16 +1,20 @@
 const cellaware_sqlite = require('@cellaware/sqlite-json-wrapper');
+const inv_core = require('../inventory');
 
 
 
 module.exports = {
 
+    listInventoryContainer(inv_ctr_id) {
+        return cellaware_sqlite.executeSelect('inv_ctr', { "inv_ctr_id": inv_ctr_id });
+    },
     // Returns as array of inventory objects, just incase there are children.
     // Includes inventory attributes inline with inventory as array.
-    async listInventory(inv_id) {
+    async listInventory(inv_ctr_id) {
 
         const invSql = `with inv_cte as
                     (
-                    select inv.* from inv where inv_id = '${inv_id}' 
+                    select inv.* from inv where inv_ctr_id = '${inv_ctr_id}' 
                     union all
                     select inv.* from inv_cte inner join inv on inv.inv_par_id = inv_cte.inv_id
                     )
@@ -19,7 +23,7 @@ module.exports = {
 
         const invAttrSql = `with inv_cte as
                     (
-                    select inv.* from inv where inv_id = '${inv_id}' 
+                    select inv.* from inv where inv_ctr_id = '${inv_ctr_id}'
                     union all
                     select inv.* from inv_cte inner join inv on inv.inv_par_id = inv_cte.inv_id
                     )
@@ -42,11 +46,5 @@ module.exports = {
         return invRes;
 
     },
-    async moveInventory() {
-
-    }
-
-
-
 
 };

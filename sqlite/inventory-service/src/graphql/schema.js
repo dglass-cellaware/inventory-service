@@ -8,7 +8,6 @@ const typeDefs = gql`
         inv_par_id: String
         inv_ctr_id: String
         attributes: [InventoryAttribute]
-        children: [Inventory]
     }
 
     type InventoryAttribute {
@@ -19,8 +18,17 @@ const typeDefs = gql`
         qty: Int
     }
 
+    type InventoryContainer {
+        inv_ctr_id: String
+        inv_ctr_typ: String
+        cur: Int
+        max: Int
+        inventory: [Inventory]
+    }
+
     type Query {
-        inventory(id: String!): [Inventory]
+        inventory(inv_id: String!): [Inventory]
+        inventoryContainer(inv_ctr_id: String!): InventoryContainer
     }
 
     type Mutation {
