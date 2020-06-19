@@ -1,32 +1,30 @@
-const { gql } = require('apollo-server')
+const { gql } = require('apollo-server');
 
 const typeDefs = gql`
 
     type Inventory {
-        id: String!
-        uom_id: String!
-        parent_id: String
-        container_id: String
+        inv_id: String
+        inv_uom: String
+        inv_par_id: String
+        inv_ctr_id: String
         attributes: [InventoryAttribute]
+        children: [Inventory]
     }
 
     type InventoryAttribute {
-        id: Int!
-        inventory_id: String!
-        item_id: String!
-        qty: Int!
-        lot_id: String
-        status: String
+        inv_attr_id: Int
+        inv_id: String
+        item_id: String
+        item_cfg_id: String
+        qty: Int
     }
 
     type Query {
-        listInventory(id: String!): [Inventory]
+        inventory(id: String!): [Inventory]
     }
 
     type Mutation {
-        createInventory(id: String!, uomId: String!, parentId: String, containerId: String): Int
-        deleteInventory(id: String!): Int!
-        createInventoryAttribute(inventoryId: String!, itemId: String!, qty: Int!, lotId: String, status: String): Int
+        foo: Int
     }
 `
 
