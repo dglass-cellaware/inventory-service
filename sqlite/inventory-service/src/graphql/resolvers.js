@@ -4,7 +4,7 @@ const inv_ctr_core = require('../core/inventory-container');
 const resolvers = {
     Query: {
         inventory: async function (root, args) {
-            var res = await inv_core.listInventory(args.inv_id);
+            var res = await inv_core.listInventory({ "inv_id": args.inv_id });
             return res;
         },
         inventoryContainer: async function (root, args) {
@@ -13,12 +13,14 @@ const resolvers = {
             return res[0];
         }
     }, Mutation: {
-        foo: function () {
-            return 5;
+        createInventory: async function (root, { input: inventoryInput }) {
+            var res = await inv_core.createInventory(inventoryInput.inv_id, inventoryInput.inv_uom, inventoryInput.inv_par_id, inventoryInput.inv_ctr_id);
+            res = await inv_core.listInventory({ "inv_id": inventoryInput.inv_id });
+            return res;
         }
     }, InventoryContainer: {
-        inventory: async function (invCtr) {
-            var res = inv_ctr_core.listInventory(invCtr.inv_ctr_id);
+        inventory: async function (inventoryContainer) {
+            var res = inv_core.listInventory({ "inv_ctr_id": inventoryContainer.inv_ctr_id });
             return res;
         }
     }

@@ -10,6 +10,13 @@ const typeDefs = gql`
         attributes: [InventoryAttribute]
     }
 
+    input InventoryInput {
+        inv_id: String!
+        inv_uom: String!
+        inv_par_id: String
+        inv_ctr_id: String
+    }
+
     type InventoryAttribute {
         inv_attr_id: Int
         inv_id: String
@@ -31,8 +38,9 @@ const typeDefs = gql`
         inventoryContainer(inv_ctr_id: String!): InventoryContainer
     }
 
+    
     type Mutation {
-        foo: Int
+        createInventory(input: InventoryInput!): [Inventory]
     }
 `
 

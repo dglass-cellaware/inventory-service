@@ -6,11 +6,13 @@ module.exports = {
 
     // Returns as array of inventory objects, just incase there are children.
     // Includes inventory attributes inline with inventory as array.
-    async listInventory(inv_id) {
+    async listInventory(where) {
+
+        var whereClause = cellaware_sqlite.buildWhereClause(where);
 
         const invSql = `with inv_cte as
                     (
-                    select inv.* from inv where inv_id = '${inv_id}' 
+                    select inv.* from inv ${whereClause}
                     union all
                     select inv.* from inv_cte inner join inv on inv.inv_par_id = inv_cte.inv_id
                     )
@@ -19,7 +21,7 @@ module.exports = {
 
         const invAttrSql = `with inv_cte as
                     (
-                    select inv.* from inv where inv_id = '${inv_id}' 
+                    select inv.* from inv ${whereClause}
                     union all
                     select inv.* from inv_cte inner join inv on inv.inv_par_id = inv_cte.inv_id
                     )
@@ -42,9 +44,10 @@ module.exports = {
         return invRes;
 
     },
-    async moveInventory() {
-
+    async createInventory(inv_id, inv_uom, inv_par_id, inv_ctr_id) {
+        return cellaware_sqlite.executeInsert('inv', { "inv_id": inv_id, "inv_uom": inv_uom, "inv_par_id": inv_par_id, "inv_ctr_id": inv_ctr_id });
     }
+
 
 
 
