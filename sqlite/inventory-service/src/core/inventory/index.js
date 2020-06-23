@@ -44,12 +44,14 @@ module.exports = {
         return invRes;
 
     },
+    async listInventoryAttributes(inv_id) {
+        return cellaware_sqlite.executeSelect('inv_attr', { "inv_id": inv_id });
+    },
     async createInventory(inv_id, inv_uom, inv_par_id, inv_ctr_id) {
         return cellaware_sqlite.executeInsert('inv', { "inv_id": inv_id, "inv_uom": inv_uom, "inv_par_id": inv_par_id, "inv_ctr_id": inv_ctr_id });
+    },
+    async createInventoryAttribute(inv_id, item_id, item_cfg_id, qty) {
+        return cellaware_sqlite.executeInsert('inv_attr', { "inv_id": inv_id, "item_id": item_id, "item_cfg_id": item_cfg_id, "qty": qty });
     }
-
-
-
-
 
 };

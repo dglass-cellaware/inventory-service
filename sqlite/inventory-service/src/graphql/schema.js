@@ -15,10 +15,18 @@ const typeDefs = gql`
         inv_uom: String!
         inv_par_id: String
         inv_ctr_id: String
+        attributes: [InventoryAttributeInput]
     }
 
     type InventoryAttribute {
         inv_attr_id: Int
+        inv_id: String
+        item_id: String
+        item_cfg_id: String
+        qty: Int
+    }
+
+    input InventoryAttributeInput {
         inv_id: String
         item_id: String
         item_cfg_id: String
@@ -35,12 +43,14 @@ const typeDefs = gql`
 
     type Query {
         inventory(inv_id: String!): [Inventory]
+        inventoryAttributes(inv_id: String!): [InventoryAttribute]
         inventoryContainer(inv_ctr_id: String!): InventoryContainer
     }
 
     
     type Mutation {
         createInventory(input: InventoryInput!): [Inventory]
+        createInventoryAttribute(input: InventoryAttributeInput!): [InventoryAttribute]
     }
 `
 
