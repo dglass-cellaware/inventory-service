@@ -4,7 +4,7 @@ const resolvers = require('./graphql/resolvers');
 const dotenv = require('dotenv').config();
 const cellaware_sqlite = require('@cellaware/sqlite-json-wrapper');
 
-cellaware_sqlite.cacheDbPath(process.env.DB_PATH);
+cellaware_sqlite.cacheDbPath("db/inventory-service.db");
 
 const server = new ApolloServer({
     typeDefs,
@@ -13,5 +13,5 @@ const server = new ApolloServer({
 
 
 server
-    .listen({ port: process.env.PORT })
+    .listen({ port: 4001 })
     .then(({ url }) => console.log(`Server is running on ${url}`));
