@@ -1,5 +1,6 @@
 const inv_core = require('../core/inventory');
 const inv_ctr_core = require('../core/inventory-container');
+const movement = require('../core/movement');
 
 const resolvers = {
     Query: {
@@ -28,6 +29,10 @@ const resolvers = {
         createInventoryAttribute: async function (root, { input: inventoryAttributeInput }) {
             var res = await inv_core.createInventoryAttribute(inventoryAttributeInput.inv_id, inventoryAttributeInput.item_id, inventoryAttributeInput.item_cfg_id, inventoryAttributeInput.qty);
             res = await inv_core.listInventoryAttributes(inventoryAttributeInput.inv_id);
+            return res;
+        },
+        moveInventory: async function (root, {input: moveInventoryInput}) {
+            var res = await movement.moveInventory(moveInventoryInput);
             return res;
         }
     }, InventoryContainer: {

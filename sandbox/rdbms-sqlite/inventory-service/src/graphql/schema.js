@@ -41,6 +41,13 @@ const typeDefs = gql`
         inventory: [Inventory]
     }
 
+    input MoveInventoryInput {
+        src_inv_id: String
+        src_ctr_id: String
+        dst_inv_id: String
+        dst_ctr_id: String
+    }
+
     type Query {
         inventory(inv_id: String!): [Inventory]
         inventoryAttributes(inv_id: String!): [InventoryAttribute]
@@ -51,6 +58,7 @@ const typeDefs = gql`
     type Mutation {
         createInventory(input: InventoryInput!): [Inventory]
         createInventoryAttribute(input: InventoryAttributeInput!): [InventoryAttribute]
+        moveInventory(input: MoveInventoryInput!): [Inventory]
     }
 `
 
