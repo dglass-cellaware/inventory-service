@@ -4,7 +4,7 @@ const cellaware_sqlite = require('@cellaware/sqlite-json-wrapper');
 
 module.exports = {
 
-    // Returns as array of inventory objects, just incase there are children.
+    // Returns as array of inventory objects, just in case there are children.
     // Includes inventory attributes inline with inventory as array.
     async listInventory(where) {
 
@@ -44,14 +44,35 @@ module.exports = {
         return invRes;
 
     },
+    async listInventoryAttribute(inv_attr_id) {
+        return cellaware_sqlite.executeSelect('inv_attr', { "inv_attr_id": inv_attr_id });
+    },
     async listInventoryAttributes(inv_id) {
         return cellaware_sqlite.executeSelect('inv_attr', { "inv_id": inv_id });
     },
     async createInventory(inv_id, inv_uom, inv_par_id, inv_ctr_id) {
         return cellaware_sqlite.executeInsert('inv', { "inv_id": inv_id, "inv_uom": inv_uom, "inv_par_id": inv_par_id, "inv_ctr_id": inv_ctr_id });
     },
+    async removeInventory(inv_id) {
+
+        var listRes = await this.listInventory({ "inv_id": inv_id });
+
+        var removeSqls = [];
+        for (var i = 0; i < listRes.length; i++) {
+            removeSqls.push(cellaware_sqlite.buildDelete("inv", { "inv_id": listRes[i].inv_id }));
+            removeSqls.push(cellaware_sqlite.buildDelete("inv_attr", { "inv_id": listRes[i].inv_id }));
+        }
+
+        return cellaware_sqlite.executeBatch(removeSqls);
+    },
     async createInventoryAttribute(inv_id, item_id, item_cfg_id, qty) {
         return cellaware_sqlite.executeInsert('inv_attr', { "inv_id": inv_id, "item_id": item_id, "item_cfg_id": item_cfg_id, "qty": qty });
+    },
+    async removeInventoryAttribute(inv_attr_id) {
+        return cellaware_sqlite.executeDelete('inv_attr', { "inv_attr_id": inv_attr_id });
+    },
+    async removeInventoryAttributes(inv_id) {
+        return cellaware_sqlite.executeDelete('inv_attr', { "inv_id": inv_id });
     }
 
 };
