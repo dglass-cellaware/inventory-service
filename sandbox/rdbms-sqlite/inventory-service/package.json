@@ -13,6 +13,7 @@
     "@cellaware/sqlite-json-wrapper": "github:cellaware/sqlite-json-wrapper",
     "apollo-server": "^2.14.4",
     "dotenv": "^8.2.0",
-    "graphql": "^15.1.0"
+    "graphql": "^15.1.0",
+    "mocha": "^8.0.1"
   }
 }
