@@ -1,39 +1,53 @@
 const cellaware_sqlite = require('@cellaware/sqlite-json-wrapper');
 
+function directMove(inv_mov_args) {
+
+}
+
+function partialSplit(inv_mov_args) {
+
+}
+
+function validateFullMove(inv_mov_args) {
+
+}
+
+function fullMove(inv_mov_args) {
+
+}
+
 module.exports = {
+    
 
     /* inv_mov_args is an object with the following attributes
      * ** OPTIONAL
      * src_inv_id
-     * src_ctr_id
+     * src_ctr_idz
      * dst_inv_id
      * dst_ctr_id
      */
     moveInventory(inv_mov_args) {
+        //validate args
+        if (!inv_mov_args.src_inv_id && !inv_mov_args.src_ctr_id) {
+            throw "No Source";
+        }
+        if (!inv_mov_args.dst_inv_id && !inv_mov_args.dst_ctr_id) {
+            throw "No Destination";
+        }
+
         //Determine type of move
-        src_inv_id = inv_mov_args.src_inv_id
-        src_ctr_id = inv_mov_args.src_ctr_id
-        dst_inv_id = inv_mov_args.dst_inv_id
-        dst_ctr_id = inv_mov_args.dst_ctr_id
-
-        if (!src_inv_id && !src_ctr_id) {
-            throw "No Source"
+        if (inv_mov_args.src_inv_id && inv_mov_args.dst_inv_id) {
+            directMove(inv_mov_args);
         }
-        if (!dst_inv_id && !dst_ctr_id) {
-            throw "No Destination"
+        else if (inv_mov_args.src_inv_id && inv_mov_args.dst_ctr_id) {
+            partialSplit(inv_mov_args);
         }
-
-        if (src_inv_id && dst_inv_id) {
-            //direct move
-        }
-        else if (src_inv_id && dst_ctr_id) {
-            //partial split
-        }
-        else if (src_ctr_id && dst_inv_id) {
-            //only allowed if dst_inv_id is root level
+        else if (inv_mov_args.src_ctr_id && inv_mov_args.dst_inv_id) {
+            validateFullMove(inv_mov_args);
+            fullMove(inv_mov_args);
         }
         else {
-            //full move
+            fullMove(inv_mov_args);
         }
     }
 
