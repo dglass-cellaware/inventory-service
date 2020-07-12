@@ -57,8 +57,11 @@ const typeDefs = gql`
     
     type Mutation {
         createInventory(input: InventoryInput!): [Inventory]
+        removeInventory(inv_id: String!): [Inventory]
         createInventoryAttribute(input: InventoryAttributeInput!): [InventoryAttribute]
         moveInventory(input: MoveInventoryInput!): [Inventory]
+        removeInventoryAttribute(inv_attr_id: String!): InventoryAttribute
+        removeInventoryAttributes(inv_id: String!): [InventoryAttribute]
     }
 `
 
