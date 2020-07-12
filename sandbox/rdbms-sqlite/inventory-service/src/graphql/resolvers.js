@@ -20,8 +20,10 @@ const resolvers = {
     }, Mutation: {
         createInventory: async function (root, { input: inventoryInput }) {
             var res = await inv_core.createInventory(inventoryInput.inv_id, inventoryInput.inv_uom, inventoryInput.inv_par_id, inventoryInput.inv_ctr_id);
-            for (i = 0; i < inventoryInput.attributes.length; i++) {
-                res = await inv_core.createInventoryAttribute(inventoryInput.inv_id, inventoryInput.attributes[i].item_id, inventoryInput.attributes[i].item_cfg_id, inventoryInput.attributes[i].qty)
+            if (inventoryInput.attributes != null) {
+                for (i = 0; i < inventoryInput.attributes.length; i++) {
+                    res = await inv_core.createInventoryAttribute(inventoryInput.inv_id, inventoryInput.attributes[i].item_id, inventoryInput.attributes[i].item_cfg_id, inventoryInput.attributes[i].qty)
+                }
             }
             res = await inv_core.listInventory({ "inv_id": inventoryInput.inv_id });
             return res;
