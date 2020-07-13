@@ -40,7 +40,8 @@ const resolvers = {
         },
         moveInventory: async function (root, {input: moveInventoryInput}) {
             var res = await movement.moveInventory(moveInventoryInput);
-            return res;
+            return res
+        },
         removeInventoryAttribute: async function (root, args) {
             var listRes = await inv_core.listInventoryAttribute(args.inv_attr_id);
             await inv_core.removeInventoryAttribute(args.inv_attr_id);
