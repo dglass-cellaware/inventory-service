@@ -1,7 +1,6 @@
 const inv_core = require('../core/inventory');
 const inv_ctr_core = require('../core/inventory-container');
 const movement = require('../core/movement');
-const cellaware_sqlite = require('@cellaware/sqlite-json-wrapper');
 
 const resolvers = {
     Query: {
@@ -10,7 +9,7 @@ const resolvers = {
             return res;
         },
         inventoryAttributes: async function (root, args) {
-            var res = await inv_core.listInventoryAttributes({ "inv_id": args.inv_id });
+            var res = await inv_core.listInventoryAttributes(args.inv_id);
             return res;
         },
         inventoryContainer: async function (root, args) {
@@ -38,7 +37,7 @@ const resolvers = {
             res = await inv_core.listInventoryAttributes(inventoryAttributeInput.inv_id);
             return res;
         },
-        moveInventory: async function (root, {input: moveInventoryInput}) {
+        moveInventory: async function (root, { input: moveInventoryInput }) {
             var res = await movement.moveInventory(moveInventoryInput);
             return res
         },

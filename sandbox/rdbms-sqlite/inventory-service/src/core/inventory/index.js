@@ -48,6 +48,7 @@ module.exports = {
         return cellaware_sqlite.executeSelect('inv_attr', { "inv_attr_id": inv_attr_id });
     },
     async listInventoryAttributes(inv_id) {
+        console.log(inv_id);
         return cellaware_sqlite.executeSelect('inv_attr', { "inv_id": inv_id });
     },
     async createInventory(inv_id, inv_uom, inv_par_id, inv_ctr_id) {
