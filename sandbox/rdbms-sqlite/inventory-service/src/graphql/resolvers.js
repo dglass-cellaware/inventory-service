@@ -5,16 +5,16 @@ const movement = require('../core/movement');
 const resolvers = {
     Query: {
         inventory: async function (root, args) {
-            var res = await inv_core.listInventory({ "inv_id": args.inv_id });
+            var res = await inv_core.listInventory(args);
             return res;
         },
         inventoryAttributes: async function (root, args) {
-            var res = await inv_core.listInventoryAttributes(args.inv_id);
+            var res = await inv_core.listInventoryAttributes(args);
             return res;
         },
         inventoryContainer: async function (root, args) {
-            var res = await inv_ctr_core.listInventoryContainer(args.inv_ctr_id);
-            return res[0];
+            var res = await inv_ctr_core.listInventoryContainer(args);
+            return res;
         }
     }, Mutation: {
         createInventory: async function (root, { input: inventoryInput }) {
@@ -44,7 +44,7 @@ const resolvers = {
         removeInventoryAttribute: async function (root, args) {
             var listRes = await inv_core.listInventoryAttribute(args.inv_attr_id);
             await inv_core.removeInventoryAttribute(args.inv_attr_id);
-            return listRes[0];
+            return listRes;
         },
         removeInventoryAttributes: async function (root, args) {
             var listRes = await inv_core.listInventoryAttributes(args.inv_id);

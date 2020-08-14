@@ -49,9 +49,9 @@ const typeDefs = gql`
     }
 
     type Query {
-        inventory(inv_id: String!): [Inventory]
-        inventoryAttributes(inv_id: String!): [InventoryAttribute]
-        inventoryContainer(inv_ctr_id: String!): InventoryContainer
+        inventory(inv_id: String): [Inventory]
+        inventoryAttributes(inv_id: String): [InventoryAttribute]
+        inventoryContainer(inv_ctr_id: String): [InventoryContainer]
     }
 
     
@@ -60,7 +60,7 @@ const typeDefs = gql`
         removeInventory(inv_id: String!): [Inventory]
         createInventoryAttribute(input: InventoryAttributeInput!): [InventoryAttribute]
         moveInventory(input: MoveInventoryInput!): [Inventory]
-        removeInventoryAttribute(inv_attr_id: String!): InventoryAttribute
+        removeInventoryAttribute(inv_attr_id: String!): [InventoryAttribute]
         removeInventoryAttributes(inv_id: String!): [InventoryAttribute]
     }
 `

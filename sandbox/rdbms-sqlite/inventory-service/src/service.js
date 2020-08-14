@@ -5,7 +5,7 @@ const dotenv = require('dotenv').config();
 const cellaware_sqlite = require('@cellaware/sqlite-json-wrapper');
 
 cellaware_sqlite.cacheDbPath("db/inventory-service.db");
-cellaware_sqlite.configure({ printSql: true });
+//cellaware_sqlite.configure({ printSql: true });
 
 const server = new ApolloServer({
     typeDefs,
